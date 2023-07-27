@@ -2,15 +2,19 @@
 #
 # Exercise 1.27
 
-total = 0
+def portfolio_cost(filename):
 
-f = open('Data/portfolio.csv' , 'rt')
-headers = next(f)
+    total = 0
 
-for line in f:
-    dataList = line.split(',')
-    total += (int(dataList[1]) * float(dataList[2]))
+    f = open(filename , 'rt')
+    headers = next(f)
 
-print('Total cost', (total))
+    for line in f:
+        dataList = line.split(',')
+        total += (int(dataList[1]) * float(dataList[2]))
+    f.close()
+    return total
 
-f.close()
+cost = portfolio_cost('Data/portfolio.csv')
+print('Total cost', cost)
+
