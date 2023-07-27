@@ -49,5 +49,7 @@ portfolio = read_portfolio('Data/portfolio.csv')
 prices = read_prices(filename)
 rept = make_report(portfolio,prices)
 
-for r in rept:
-    print('%10s %10d %10.2f %10.2f' % r)
+print(f'{"Name":>10s} {"Shares":>10s} {"Price":>10s} {"Change":>10s}')
+print(f'{"----------":>10s} {"----------":>10s} {"----------":>10s} {"----------":>10s}')
+for name, shares, price, change in rept:
+        print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
