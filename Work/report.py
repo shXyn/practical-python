@@ -20,7 +20,7 @@ def read_portfolio(filename):
             holding['price'] = float(row[2])
             portfolio.append(holding)
     return portfolio
-
+ 
 def read_prices(filename):
     stock_prices = {}
     with open(filename, 'rt') as f:
