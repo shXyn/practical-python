@@ -13,12 +13,12 @@ def read_portfolio(filename):
     with open(filename, 'rt') as f:
         rows = csv.reader(f)
         headers = next(rows)
-        for row in rows:
-            holding = {}
-            holding['name'] = row[0]
-            holding['shares'] = int(row[1])
-            holding['price'] = float(row[2])
-            portfolio.append(holding)
+        for rowno, row in enumerate(rows):
+            try:
+                holding = dict(zip(headers,row))
+                portfolio.append(holding)
+            except:
+                print(f'Row: {rowno} Invalid: {row}')
     return portfolio
  
 def read_prices(filename):
@@ -36,7 +36,7 @@ def make_report(stocks,prices):
     report = []
     for s in stocks:
         current_price = prices.get(s['name'],0.0)
-        change =  current_price - s['price']
+        change =  current_price - float(s['price'])
         report.append((s['name'],s['shares'],current_price,change))
     return report
 
@@ -45,11 +45,11 @@ if len(sys.argv) == 2:
 else:
     filename = 'Data/prices.csv'
 
-portfolio = read_portfolio('Data/portfolio.csv')
+portfolio = read_portfolio('Data/portfoliodate.csv')
 prices = read_prices(filename)
 rept = make_report(portfolio,prices)
 
 print(f'{"Name":>10s} {"Shares":>10s} {"Price":>10s} {"Change":>10s}')
 print(f'{"----------":>10s} {"----------":>10s} {"----------":>10s} {"----------":>10s}')
 for name, shares, price, change in rept:
-        print(f'{name:>10s} {shares:>10d} {price:>10.2f} {change:>10.2f}')
+        print(f'{name:>10s} {shares:>10s} {price:>10.2f} {change:>10.2f}')
